@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import React from "react";
+// import ReactDOM from "react-dom";
+
+import SoftPhone from "react-softphone";
+import { WebSocketInterface } from "jssip";
+
+const config = {
+  domain: '192.168.10.194', // sip-server@your-domain.io
+  uri: 'sip:1564@192.168.10.194', // sip:sip-user@your-domain.io
+  password: 'ddish123', //  PASSWORD ,
+  ws_servers: 'ws://192.168.10.194:5038/ws', //ws server
+  sockets: new WebSocketInterface('ws://192.168.10.194:5038/ws'),
+  display_name: 'Turuu',//jssip Display Name
+  debug: true // Turn debug messages on
+};
+
+/* const config = {
+  domain: "pbx.zadarma.com",
+  uri: "sip:88198-103@pbx.zadarma.com",
+  password: "fAg9DRtcL7",
+  ws_servers: "wss://pbx.zadarma.com:4443/",
+  sockets: new WebSocketInterface("wss://pbx.zadarma.com:4443/"),
+  display_name: "***",
+  debug: true
+}; */
+
+const setConnectOnStartToLocalStorage = (newValue) => {
+  // Handle save the auto connect value to local storage
+  return true;
+};
+const setNotifications = (newValue) => {
+  // Handle save the Show notifications of an incoming call to local storage
+  return true;
+};
+const setCallVolume = (newValue) => {
+  // Handle save the call Volume value to local storage
+  return true;
+};
+const setRingVolume = (newValue) => {
+  // Handle save the Ring Volume value to local storage
+  return true;
+};
+
+const App = () => (
+  <div style={{ position: "absolute" }}>
+    <SoftPhone
+      callVolume={33} //Set Default callVolume
+      ringVolume={44} //Set Default ringVolume
+      connectOnStart //Auto connect to sip
+      notifications //Show Browser Notification of an incoming call
+      config={config} //Voip config
+      setConnectOnStartToLocalStorage={setConnectOnStartToLocalStorage} // Callback function
+      setNotifications={setNotifications} // Callback function
+      setCallVolume={setCallVolume} // Callback function
+      setRingVolume={setRingVolume} // Callback function
+      timelocale={"UTC+3"} //Set time local for call history
+    />
+  </div>
+);
 
 export default App;
+
+//ReactDOM.render(<App />, document.getElementById("container"));
